@@ -131,6 +131,7 @@ pip-selfcheck.json
 
 ### Custom ###
 envar
+app/static/generated
 
 
 # End of https://www.gitignore.io/api/venv,python,visualstudiocode
