@@ -282,29 +282,29 @@ def getrawdata():
     minute = request.json.get('minute')
     second = request.json.get('second')
 
-    query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}'".format(company)
+    query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' LIMIT 50".format(company)
     if year is not None:
-        query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={}".format(
+        query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} LIMIT 50".format(
             company, year
         )
         if month is not None:
-            query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={}".format(
+            query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} LIMIT 50".format(
                 company, year, month
             )
             if day is not None:
-                query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={}".format(
+                query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={} LIMIT 50".format(
                     company, year, month, day
                 )
                 if hour is not None:
-                    query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={} and hour={}".format(
+                    query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={} and hour={} LIMIT 50".format(
                         company, year, month, day, hour
                     )
                     if minute is not None:
-                        query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={}".format(
+                        query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
                             company, year, month, day, hour, minute
                         )
                         if second is not None:
-                            query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={} and second={}".format(
+                            query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
                                 company, year, month, day, hour, minute, second
                             )
 
