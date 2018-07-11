@@ -270,7 +270,7 @@ def createuser():
 
     return jsonify({'username': user['username']}), 201
 
-@app.route('/api/statistic/v1.0/rawdata', methods=['GET'])
+@app.route('/api/statistic/v1.0/rawdata', methods=['POST'])
 @auth.login_required
 def getrawdata():
     # company = g.user['company']
