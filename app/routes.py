@@ -1,6 +1,7 @@
-from app import app, auth
+from app import app, auth, session
 from app.models import User, Sensor
 from flask import request, abort, jsonify, g, send_from_directory
+from cassandra.query  import SimpleStatement
 from flask_httpauth import HTTPBasicAuth
 import os, tarfile
 
@@ -9,8 +10,6 @@ import os, tarfile
 @auth.login_required
 def index():
     return "index"
-
-@app.route('/api/statistic/v1.0/rawdatasecond', methods=['GET'])
 
 @app.route('/api/token/v1.0/getauthtoken', methods=['GET'])
 @auth.login_required
@@ -270,6 +269,56 @@ def createuser():
     )
 
     return jsonify({'username': user['username']}), 201
+
+@app.route('/api/statistic/v1.0/rawdata', methods=['GET'])
+@auth.login_required
+def getrawdata():
+    # company = g.user['company']
+    company = request.json.get('company')
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}'".format(company)
+    if year is not None:
+        query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={}".format(
+            company, year
+        )
+        if month is not None:
+            query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={}".format(
+                company, year, month
+            )
+            if day is not None:
+                query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={}".format(
+                    company, year, month, day
+                )
+                if hour is not None:
+                    query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={} and hour={}".format(
+                        company, year, month, day, hour
+                    )
+                    if minute is not None:
+                        query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={}".format(
+                            company, year, month, day, hour, minute
+                        )
+                        if second is not None:
+                            query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={} and second={}".format(
+                                company, year, month, day, hour, minute, second
+                            )
+
+    statement = SimpleStatement(query)
+    obj = {
+        "company" : company,
+        "count" : 0,
+        "data" : []
+    }
+    for raw_data in session.execute(statement):
+        obj['data'].append(raw_data)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
 
 @auth.verify_password
 def verify_password(username_or_token, password):
