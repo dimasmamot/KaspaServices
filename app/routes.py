@@ -645,7 +645,7 @@ def getprotocolbysporthit(protocol):
         "data" : []
     }
     for protocolbysporthit in session.execute(statement):
-        obj['data'].append(protocolhitbysporthit)
+        obj['data'].append(protocolbysporthit)
         obj['count'] = obj['count'] + 1
     
     return jsonify(obj)
@@ -771,6 +771,7 @@ def getprotocolbydporthitdev(protocol, device_id):
         obj['count'] = obj['count'] + 1
     
     return jsonify(obj)
+
 
 @auth.verify_password
 def verify_password(username_or_token, password):
