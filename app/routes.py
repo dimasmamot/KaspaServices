@@ -320,6 +320,458 @@ def getrawdata():
     
     return jsonify(obj)
 
+@app.route('/api/statistic/v1.0/rawdata/<device_id>', methods=['POST'])
+@auth.login_required
+def getrawdatadev(device_id):
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    query = "SELECT * FROM kaspa.raw_data_by_device_id WHERE device_id='{}' LIMIT 50".format(device_id)
+    if year is not None:
+        query = "SELECT * FROM kaspa.raw_data_by_device_id WHERE device_id='{}' and year={} LIMIT 50".format(
+            device_id, year
+        )
+        if month is not None:
+            query = "SELECT * FROM kaspa.raw_data_by_device_id WHERE device_id='{}' and year={} and month={} LIMIT 50".format(
+                device_id, year, month
+            )
+            if day is not None:
+                query = "SELECT * FROM kaspa.raw_data_by_device_id WHERE device_id='{}' and year={} and month={} and day={} LIMIT 50".format(
+                    device_id, year, month, day
+                )
+                if hour is not None:
+                    query = "SELECT * FROM kaspa.raw_data_by_device_id WHERE device_id='{}' and year={} and month={} and day={} and hour={} LIMIT 50".format(
+                        device_id, year, month, day, hour
+                    )
+                    if minute is not None:
+                        query = "SELECT * FROM kaspa.raw_data_by_device_id WHERE device_id='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                            device_id, year, month, day, hour, minute
+                        )
+                        if second is not None:
+                            query = "SELECT * FROM kaspa.raw_data_by_device_id WHERE device_id='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                                device_id, year, month, day, hour, minute, second
+                            )
+
+    statement = SimpleStatement(query)
+    obj = {
+        "device_id" : device_id,
+        "count" : 0,
+        "data" : []
+    }
+    for raw_data in session.execute(statement):
+        obj['data'].append(raw_data)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+
+@app.route('/api/statistic/v1.0/eventhit', methods=['POST'])
+@auth.login_required
+def geteventhit():
+    # company = g.user['company']
+    company = request.json.get('company')
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    if year is None or month is None or day is None:
+        abort(400)
+
+    query = "SELECT * FROM event_hit_on_company_day WHERE company={} and year={} and month={} and day={} LIMIT 50".format(company, year, month, day)
+    if hour is not None:
+        query = "SELECT * FROM event_hit_on_company_hour WHERE company={} and year={} and month={} and day={} and hour={} LIMIT 50".format(
+            company, year, month, day, hour
+        )
+        if minute is not None:
+            query = "SELECT * FROM event_hit_on_company_minute WHERE company={} and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                company, year, month, day, hour, minute
+            )
+            if second is not None:
+                query = "SELECT * FROM event_hit_on_company_sec WHERE company={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                    company, year, month, day, hour, minute, second
+                )
+    
+    statement = SimpleStatement(query)
+    obj = {
+        "company" : company,
+        "count" : 0,
+        "data" : []
+    }
+    for eventhit in session.execute(statement):
+        obj['data'].append(eventhit)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+
+@app.route('/api/statistic/v1.0/eventhit/<device_id>', methods=['POST'])
+@auth.login_required
+def geteventhitdev(device_id):
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    if year is None or month is None or day is None:
+        abort(400)
+
+    query = "SELECT * FROM event_hit_on_device_id_day WHERE device_id={} and year={} and month={} and day={} LIMIT 50".format(device_id, year, month, day)
+    if hour is not None:
+        query = "SELECT * FROM event_hit_on_device_id_hour WHERE device_id={} and year={} and month={} and day={} and hour={} LIMIT 50".format(
+            device_id, year, month, day, hour
+        )
+        if minute is not None:
+            query = "SELECT * FROM event_hit_on_device_id_minute WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                device_id, year, month, day, hour, minute
+            )
+            if second is not None:
+                query = "SELECT * FROM event_hit_on_device_id_sec WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                    device_id, year, month, day, hour, minute, second
+                )
+    
+    statement = SimpleStatement(query)
+    obj = {
+        "device_id" : device_id,
+        "count" : 0,
+        "data" : []
+    }
+    for eventhit in session.execute(statement):
+        obj['data'].append(eventhit)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+
+@app.route('/api/statistic/v1.0/signaturehit', methods=['POST'])
+@auth.login_required
+def getsignaturehit():
+    # company = g.user['company']
+    company = request.json.get('company')
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    if year is None or month is None or day is None:
+        abort(400)
+
+    query = "SELECT * FROM signature_hit_on_company_day WHERE company={} and year={} and month={} and day={} LIMIT 50".format(company, year, month, day)
+    if hour is not None:
+        query = "SELECT * FROM signature_hit_on_company_hour WHERE company={} and year={} and month={} and day={} and hour={} LIMIT 50".format(
+            company, year, month, day, hour
+        )
+        if minute is not None:
+            query = "SELECT * FROM signature_hit_on_company_minute WHERE company={} and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                company, year, month, day, hour, minute
+            )
+            if second is not None:
+                query = "SELECT * FROM signature_hit_on_company_second WHERE company={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                    company, year, month, day, hour, minute, second
+                )
+    
+    statement = SimpleStatement(query)
+    obj = {
+        "company" : company,
+        "count" : 0,
+        "data" : []
+    }
+    for signaturehit in session.execute(statement):
+        obj['data'].append(signaturehit)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+    
+@app.route('/api/statistic/v1.0/signaturehit/<device_id>', methods=['POST'])
+@auth.login_required
+def getsignaturehitdev(device_id):
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    if year is None or month is None or day is None:
+        abort(400)
+
+    query = "SELECT * FROM signature_hit_on_device_id_day WHERE device_id={} and year={} and month={} and day={} LIMIT 50".format(device_id, year, month, day)
+    if hour is not None:
+        query = "SELECT * FROM signature_hit_on_device_id_hour WHERE device_id={} and year={} and month={} and day={} and hour={} LIMIT 50".format(
+            device_id, year, month, day, hour
+        )
+        if minute is not None:
+            query = "SELECT * FROM signature_hit_on_device_id_minute WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                device_id, year, month, day, hour, minute
+            )
+            if second is not None:
+                query = "SELECT * FROM signature_hit_on_device_id_second WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                    device_id, year, month, day, hour, minute, second
+                )
+    
+    statement = SimpleStatement(query)
+    obj = {
+        "device_id" : device_id,
+        "count" : 0,
+        "data" : []
+    }
+    for signaturehit in session.execute(statement):
+        obj['data'].append(signaturehit)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+
+@app.route('/api/statistic/v1.0/protocolhit', methods=['POST'])
+@auth.login_required
+def getprotocolhit():
+     # company = g.user['company']
+    company = request.json.get('company')
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    if year is None or month is None or day is None:
+        abort(400)
+
+    query = "SELECT * FROM protocol_hit_on_company_day WHERE company={} and year={} and month={} and day={} LIMIT 50".format(company, year, month, day)
+    if hour is not None:
+        query = "SELECT * FROM protocol_hit_on_company_hour WHERE company={} and year={} and month={} and day={} and hour={} LIMIT 50".format(
+            company, year, month, day, hour
+        )
+        if minute is not None:
+            query = "SELECT * FROM protocol_hit_on_company_minute WHERE company={} and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                company, year, month, day, hour, minute
+            )
+            if second is not None:
+                query = "SELECT * FROM protocol_hit_on_company_second WHERE company={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                    company, year, month, day, hour, minute, second
+                )
+    
+    statement = SimpleStatement(query)
+    obj = {
+        "company" : company,
+        "count" : 0,
+        "data" : []
+    }
+    for protocolhit in session.execute(statement):
+        obj['data'].append(protocolhit)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+    
+@app.route('/api/statistic/v1.0/protocolhit/<device_id>', methods=['POST'])
+@auth.login_required
+def getprotocolhitdev(device_id):
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    if year is None or month is None or day is None:
+        abort(400)
+
+    query = "SELECT * FROM protocol_hit_on_device_id_day WHERE device_id={} and year={} and month={} and day={} LIMIT 50".format(device_id, year, month, day)
+    if hour is not None:
+        query = "SELECT * FROM protocol_hit_on_device_id_hour WHERE device_id={} and year={} and month={} and day={} and hour={} LIMIT 50".format(
+            device_id, year, month, day, hour
+        )
+        if minute is not None:
+            query = "SELECT * FROM protocol_hit_on_device_id_minute WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                device_id, year, month, day, hour, minute
+            )
+            if second is not None:
+                query = "SELECT * FROM protocol_hit_on_device_id_second WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                    device_id, year, month, day, hour, minute, second
+                )
+    
+    statement = SimpleStatement(query)
+    obj = {
+        "device_id" : device_id,
+        "count" : 0,
+        "data" : []
+    }
+    for protocolhit in session.execute(statement):
+        obj['data'].append(protocolhit)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+
+@app.route('/api/statistic/v1.0/protocolbysporthit/<protocol>', methods=['POST'])
+@auth.login_required
+def getprotocolbysporthit(protocol):
+    # company = g.user['company']
+    company = request.json.get('company')
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    if year is None or month is None or day is None:
+        abort(400)
+
+    query = "SELECT * FROM protocol_by_sport_hit_on_company_day WHERE company={} and protocol={} and year={} and month={} and day={} LIMIT 50".format(company, protocol, year, month, day)
+    if hour is not None:
+        query = "SELECT * FROM protocol_by_sport_hit_on_company_hour WHERE company={} and protocol={} and year={} and month={} and day={} and hour={} LIMIT 50".format(
+            company, protocol, year, month, day, hour
+        )
+        if minute is not None:
+            query = "SELECT * FROM protocol_by_sport_hit_on_company_minute WHERE company={} and protocol={} and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                company, protocol, year, month, day, hour, minute
+            )
+            if second is not None:
+                query = "SELECT * FROM protocol_by_sport_hit_on_company_second WHERE company={} and protocol={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                    company, protocol, year, month, day, hour, minute, second
+                )
+    
+    statement = SimpleStatement(query)
+    obj = {
+        "company" : company,
+        "protocol": protocol,
+        "count" : 0,
+        "data" : []
+    }
+    for protocolbysporthit in session.execute(statement):
+        obj['data'].append(protocolhitbysporthit)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+
+@app.route('/api/statistic/v1.0/protocolbysporthit/<protocol>/<device_id>', methods=['POST'])
+@auth.login_required
+def getprotocolbysporthitdev(protocol, device_id):
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    if year is None or month is None or day is None:
+        abort(400)
+    
+    query = "SELECT * FROM protocol_by_sport_hit_on_device_id_day WHERE device_id={} and protocol={} and year={} and month={} and day={} LIMIT 50".format(device_id, protocol, year, month, day)
+    if hour is not None:
+        query = "SELECT * FROM protocol_by_sport_hit_on_device_id_hour WHERE device_id={} and protocol={} and year={} and month={} and day={} and hour={} LIMIT 50".format(
+            device_id, protocol, year, month, day, hour
+        )
+        if minute is not None:
+            query = "SELECT * FROM protocol_by_sport_hit_on_device_id_minute WHERE device_id={} and protocol={} and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                device_id, protocol, year, month, day, hour, minute
+            )
+            if second is not None:
+                query = "SELECT * FROM protocol_by_sport_hit_on_device_id_second WHERE device_id={} and protocol={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                    device_id, protocol, year, month, day, hour, minute, second
+                )
+    
+    statement = SimpleStatement(query)
+    obj = {
+        "device_id" : device_id,
+        "protocol": protocol,
+        "count" : 0,
+        "data" : []
+    }
+    for protocolbysporthit in session.execute(statement):
+        obj['data'].append(protocolbysporthit)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+
+@app.route('/api/statistic/v1.0/protocolbydporthit/<protocol>', methods=['POST'])
+@auth.login_required
+def getprotocolbydporthid(protocol):
+    # company = g.user['company']
+    company = request.json.get('company')
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    if year is None or month is None or day is None:
+        abort(400)
+
+    query = "SELECT * FROM protocol_by_dport_hit_on_company_day WHERE company={} and protocol={} and year={} and month={} and day={} LIMIT 50".format(company, protocol, year, month, day)
+    if hour is not None:
+        query = "SELECT * FROM protocol_by_dport_hit_on_company_hour WHERE company={} and protocol={} and year={} and month={} and day={} and hour={} LIMIT 50".format(
+            company, protocol, year, month, day, hour
+        )
+        if minute is not None:
+            query = "SELECT * FROM protocol_by_dport_hit_on_company_minute WHERE company={} and protocol={} and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                company, protocol, year, month, day, hour, minute
+            )
+            if second is not None:
+                query = "SELECT * FROM protocol_by_dport_hit_on_company_second WHERE company={} and protocol={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                    company, protocol, year, month, day, hour, minute, second
+                )
+    
+    statement = SimpleStatement(query)
+    obj = {
+        "company" : company,
+        "protocol": protocol,
+        "count" : 0,
+        "data" : []
+    }
+    for protocolbydporthit in session.execute(statement):
+        obj['data'].append(protocolbydporthit)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+
+@app.route('/api/statistic/v1.0/protocolbydporthit/<protocol>/<device_id>', methods=['POST'])
+@auth.login_required
+def getprotocolbydporthitdev(protocol, device_id):
+    year = request.json.get('year')
+    month = request.json.get('month')
+    day = request.json.get('day')
+    hour = request.json.get('hour')
+    minute = request.json.get('minute')
+    second = request.json.get('second')
+
+    if year is None or month is None or day is None:
+        abort(400)
+    
+    query = "SELECT * FROM protocol_by_dport_hit_on_device_id_day WHERE device_id={} and protocol={} and year={} and month={} and day={} LIMIT 50".format(device_id, protocol, year, month, day)
+    if hour is not None:
+        query = "SELECT * FROM protocol_by_dport_hit_on_device_id_hour WHERE device_id={} and protocol={} and year={} and month={} and day={} and hour={} LIMIT 50".format(
+            device_id, protocol, year, month, day, hour
+        )
+        if minute is not None:
+            query = "SELECT * FROM protocol_by_dport_hit_on_device_id_minute WHERE device_id={} and protocol={} and year={} and month={} and day={} and hour={} and minute={} LIMIT 50".format(
+                device_id, protocol, year, month, day, hour, minute
+            )
+            if second is not None:
+                query = "SELECT * FROM protocol_by_dport_hit_on_device_id_second WHERE device_id={} and protocol={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT 50".format(
+                    device_id, protocol, year, month, day, hour, minute, second
+                )
+    
+    statement = SimpleStatement(query)
+    obj = {
+        "device_id" : device_id,
+        "protocol": protocol,
+        "count" : 0,
+        "data" : []
+    }
+    for protocolbydporthit in session.execute(statement):
+        obj['data'].append(protocolbydporthit)
+        obj['count'] = obj['count'] + 1
+    
+    return jsonify(obj)
+
 @auth.verify_password
 def verify_password(username_or_token, password):
     user = User.verify_auth_token(username_or_token)
