@@ -11,7 +11,7 @@ import os, tarfile
 def index():
     return "index"
 
-@app.route('/api/token/v1.0/getauthtoken', methods=['GET'])
+@app.route('/api/token/v1.0/getauthtoken', methods=['POST'])
 @auth.login_required
 def getauthtoken():
     token = g.user.generate_auth_token()
@@ -222,7 +222,7 @@ def createsensor():
         'sensor_key' : sensor['sensor_key'],
     })
 
-@app.route('/api/users/v1.0/getuserdetail/<username>', methods=['GET'])
+@app.route('/api/users/v1.0/getuserdetail/<username>', methods=['POST'])
 @auth.login_required
 def getuserdetail(username):
     q = User.objects.filter(username=username).first()

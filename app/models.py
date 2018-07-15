@@ -29,8 +29,8 @@ class User(Model):
     def set_admin(self):
         self.group = "admin"
 
-    def generate_auth_token(self, expiration=600):
-        s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+    def generate_auth_token(self):
+        s = Serializer(app.config['SECRET_KEY'])
         return s.dumps({'username': self.username})
 
     @staticmethod
