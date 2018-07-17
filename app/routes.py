@@ -283,7 +283,9 @@ def getrawdata():
     second = request.json.get('second')
     limit = request.json.get('limit')
 
-    query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' LIMIT {}".format(company, limit)
+    query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' LIMIT {}".format(
+        company, limit
+    )
     if year is not None:
         query = "SELECT * FROM kaspa.raw_data_by_company WHERE company='{}' and year={} LIMIT {}".format(
             company, year, limit
