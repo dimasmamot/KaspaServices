@@ -390,27 +390,27 @@ def geteventhit():
     if year is None:
         abort(400)
 
-    query = "SELECT * FROM event_hit_on_company_year WHERE company = {} and year={} LIMIT {}".format(
+    query = "SELECT * FROM event_hit_on_company_year WHERE company='{}' and year={} LIMIT {}".format(
         company, year, limit
     )
     if month is not None:
-        query = "SELECT * FROM event_hit_on_company_month WHERE company = {} and year={} and month={} LIMIT {}".format(
+        query = "SELECT * FROM event_hit_on_company_month WHERE company='{}' and year={} and month={} LIMIT {}".format(
             company, year, month, limit
         )
         if day is not None:
-            query = "SELECT * FROM event_hit_on_company_day WHERE company={} and year={} and month={} and day={} LIMIT {}".format(
+            query = "SELECT * FROM event_hit_on_company_day WHERE company='{}' and year={} and month={} and day={} LIMIT {}".format(
                 company, year, month, day, limit
             )
             if hour is not None:
-                query = "SELECT * FROM event_hit_on_company_hour WHERE company={} and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                query = "SELECT * FROM event_hit_on_company_hour WHERE company='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
                     company, year, month, day, hour, limit
                 )
                 if minute is not None:
-                    query = "SELECT * FROM event_hit_on_company_minute WHERE company={} and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
+                    query = "SELECT * FROM event_hit_on_company_minute WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
                         company, year, month, day, hour, minute, limit
                     )
                     if second is not None:
-                        query = "SELECT * FROM event_hit_on_company_sec WHERE company={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
+                        query = "SELECT * FROM event_hit_on_company_sec WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
                             company, year, month, day, hour, minute, second, limit
                         )
             
@@ -440,27 +440,27 @@ def geteventhitdev(device_id):
     if year is None:
         abort(400)
 
-    query = "SELECT * FROM event_hit_on_device_id_month WHERE device_id={} and year={} LIMIT {}".format(
+    query = "SELECT * FROM event_hit_on_device_id_month WHERE device_id='{}' and year={} LIMIT {}".format(
         device_id, year, limit
     ) 
     if month is not None :
-        query = "SELECT * FROM event_hit_on_device_id_month WHERE device_id={} and year={} and month={} LIMIT {}".format(
+        query = "SELECT * FROM event_hit_on_device_id_month WHERE device_id='{}' and year={} and month={} LIMIT {}".format(
             device_id, year, month, limit
         )
         if day is not None:
-            query = "SELECT * FROM event_hit_on_device_id_day WHERE device_id={} and year={} and month={} and day={} LIMIT {}".format(
+            query = "SELECT * FROM event_hit_on_device_id_day WHERE device_id='{}' and year={} and month={} and day={} LIMIT {}".format(
                 device_id, year, month, day, limit
             )
             if hour is not None:
-                query = "SELECT * FROM event_hit_on_device_id_hour WHERE device_id={} and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                query = "SELECT * FROM event_hit_on_device_id_hour WHERE device_id='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
                     device_id, year, month, day, hour, limit
                 )
                 if minute is not None:
-                    query = "SELECT * FROM event_hit_on_device_id_minute WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
+                    query = "SELECT * FROM event_hit_on_device_id_minute WHERE device_id='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
                         device_id, year, month, day, hour, minute, limit
                     )
                     if second is not None:
-                        query = "SELECT * FROM event_hit_on_device_id_sec WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
+                        query = "SELECT * FROM event_hit_on_device_id_sec WHERE device_id='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
                             device_id, year, month, day, hour, minute, second, limit
                         )
             
