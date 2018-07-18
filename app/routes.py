@@ -484,24 +484,33 @@ def getsignaturehit():
     second = request.json.get('second')
     limit = request.json.get('limit')
 
-    if year is None or month is None or day is None:
-        abort(400)
-
-    query = "SELECT * FROM signature_hit_on_company_day WHERE company={} and year={} and month={} and day={} LIMIT {}".format(company, year, month, day, limit)
-    if hour is not None:
-        query = "SELECT * FROM signature_hit_on_company_hour WHERE company={} and year={} and month={} and day={} and hour={} LIMIT {}".format(
-            company, year, month, day, hour, limit
+    if year is not None:
+        query = "SELECT * FROM signature_hit_on_company_year WHERE company={} and year={}".format(
+            company
         )
-        if minute is not None:
-            query = "SELECT * FROM signature_hit_on_company_minute WHERE company={} and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
-                company, year, month, day, hour, minute, limit
+        if month is not None:
+            query = "SELECT * FROM signature_hit_on_company_month WHERE company={} and year={} and month={} LIMIT {}".format(
+                company, year, month
             )
-            if second is not None:
-                query = "SELECT * FROM signature_hit_on_company_sec WHERE company={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
-                    company, year, month, day, hour, minute, second, limit
+            if day is not None:
+                query = "SELECT * FROM signature_hit_on_company_day WHERE company={} and year={} and month={} and day={} LIMIT {}".format(
+                    company, year, month, day, limit
                 )
-    
-    statement = SimpleStatement(query)
+                if hour is not None:
+                    query = "SELECT * FROM signature_hit_on_company_hour WHERE company={} and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                        company, year, month, day, hour, limit
+                    )
+                    if minute is not None:
+                        query = "SELECT * FROM signature_hit_on_company_minute WHERE company={} and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
+                            company, year, month, day, hour, minute, limit
+                        )
+                        if second is not None:
+                            query = "SELECT * FROM signature_hit_on_company_sec WHERE company={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
+                                company, year, month, day, hour, minute, second, limit
+                            )
+                
+                statement = SimpleStatement(query)
+        
     obj = {
         "company" : company,
         "count" : 0,
@@ -524,23 +533,31 @@ def getsignaturehitdev(device_id):
     second = request.json.get('second')
     limit = request.json.get('limit')
 
-    if year is None or month is None or day is None:
-        abort(400)
-
-    query = "SELECT * FROM signature_hit_on_device_id_day WHERE device_id={} and year={} and month={} and day={} LIMIT {}".format(device_id, year, month, day, limit)
-    if hour is not None:
-        query = "SELECT * FROM signature_hit_on_device_id_hour WHERE device_id={} and year={} and month={} and day={} and hour={} LIMIT {}".format(
-            device_id, year, month, day, hour, limit
+    if year is not None:
+        query = "SELECT * FROM signature_hit_on_device_id_year WHERE device_id={} and year={} LIMIT {}".format(
+            device_id, year, limit
         )
-        if minute is not None:
-            query = "SELECT * FROM signature_hit_on_device_id_minute WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
-                device_id, year, month, day, hour, minute, limit
+        if month is not None:
+            query = "SELECT * FROM signature_hit_on_device_id_month WHERE device_id={} and year={} and month={} LIMIT {}".format(
+                device_id, year, month, limit
             )
-            if second is not None:
-                query = "SELECT * FROM signature_hit_on_device_id_sec WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
-                    device_id, year, month, day, hour, minute, second, limit
+            if day is not None:
+                query = "SELECT * FROM signature_hit_on_device_id_day WHERE device_id={} and year={} and month={} and day={} LIMIT {}".format(
+                    device_id, year, month, day, limit
                 )
-    
+                if hour is not None:
+                    query = "SELECT * FROM signature_hit_on_device_id_hour WHERE device_id={} and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                        device_id, year, month, day, hour, limit
+                    )
+                    if minute is not None:
+                        query = "SELECT * FROM signature_hit_on_device_id_minute WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
+                            device_id, year, month, day, hour, minute, limit
+                        )
+                        if second is not None:
+                            query = "SELECT * FROM signature_hit_on_device_id_sec WHERE device_id={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
+                                device_id, year, month, day, hour, minute, second, limit
+                            )
+                
     statement = SimpleStatement(query)
     obj = {
         "device_id" : device_id,
