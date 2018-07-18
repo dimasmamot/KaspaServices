@@ -583,23 +583,31 @@ def getprotocolhit():
     second = request.json.get('second')
     limit = request.json.get('limit')
 
-    if year is None or month is None or day is None:
-        abort(400)
-
-    query = "SELECT * FROM protocol_hit_on_company_day WHERE company='{}' and year={} and month={} and day={} LIMIT {}".format(company, year, month, day, limit)
-    if hour is not None:
-        query = "SELECT * FROM protocol_hit_on_company_hour WHERE company='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
-            company, year, month, day, hour, limit
+    if year is not None:
+        query = "SELECT * FROM protocol_hit_on_company_year WHERE company='{}' and year={} LIMIT {}".format(
+            company, year, limit
         )
-        if minute is not None:
-            query = "SELECT * FROM protocol_hit_on_company_minute WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
-                company, year, month, day, hour, minute, limit
+        if month is not None:
+            query = "SELECT * FROM protocol_hit_on_company_month WHERE company='{}' and year={} and month={} LIMIT {}".format(
+                company, year, month, limit
             )
-            if second is not None:
-                query = "SELECT * FROM protocol_hit_on_company_sec WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
-                    company, year, month, day, hour, minute, second, limit
+            if day is not None:                
+                query = "SELECT * FROM protocol_hit_on_company_day WHERE company='{}' and year={} and month={} and day={} LIMIT {}".format(
+                    company, year, month, day, limit
                 )
-    
+                if hour is not None:
+                    query = "SELECT * FROM protocol_hit_on_company_hour WHERE company='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                        company, year, month, day, hour, limit
+                    )
+                    if minute is not None:
+                        query = "SELECT * FROM protocol_hit_on_company_minute WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
+                            company, year, month, day, hour, minute, limit
+                        )
+                        if second is not None:
+                            query = "SELECT * FROM protocol_hit_on_company_sec WHERE company='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
+                                company, year, month, day, hour, minute, second, limit
+                            )
+                
     statement = SimpleStatement(query)
     obj = {
         "company" : company,
@@ -623,23 +631,31 @@ def getprotocolhitdev(device_id):
     second = request.json.get('second')
     limit = request.json.get('limit')
 
-    if year is None or month is None or day is None:
-        abort(400)
-
-    query = "SELECT * FROM protocol_hit_on_device_id_day WHERE device_id='{}' and year={} and month={} and day={} LIMIT {}".format(device_id, year, month, day, limit)
-    if hour is not None:
-        query = "SELECT * FROM protocol_hit_on_device_id_hour WHERE device_id='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
-            device_id, year, month, day, hour, limit
+    if year is not None:
+        query = "SELECT * FROM protocol_hit_on_device_id_year WHERE device_id='{}' and year={} LIMIT {}".format(
+            device_id, year, limit
         )
-        if minute is not None:
-            query = "SELECT * FROM protocol_hit_on_device_id_minute WHERE device_id='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
-                device_id, year, month, day, hour, minute, limit
+        if month is not None:
+            query = "SELECT * FROM protocol_hit_on_device_id_month WHERE device_id='{}' and year={} and month={} LIMIT {}".format(
+                device_id, year, month, limit
             )
-            if second is not None:
-                query = "SELECT * FROM protocol_hit_on_device_id_sec WHERE device_id='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
-                    device_id, year, month, day, hour, minute, second, limit
+            if day is not None:
+                query = "SELECT * FROM protocol_hit_on_device_id_day WHERE device_id='{}' and year={} and month={} and day={} LIMIT {}".format(
+                    device_id, year, month, day, limit
                 )
-    
+                if hour is not None:
+                    query = "SELECT * FROM protocol_hit_on_device_id_hour WHERE device_id='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                        device_id, year, month, day, hour, limit
+                    )
+                    if minute is not None:
+                        query = "SELECT * FROM protocol_hit_on_device_id_minute WHERE device_id='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
+                            device_id, year, month, day, hour, minute, limit
+                        )
+                        if second is not None:
+                            query = "SELECT * FROM protocol_hit_on_device_id_sec WHERE device_id='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
+                                device_id, year, month, day, hour, minute, second, limit
+                            )
+                
     statement = SimpleStatement(query)
     obj = {
         "device_id" : device_id,
@@ -665,23 +681,31 @@ def getprotocolbysporthit(protocol):
     second = request.json.get('second')
     limit = request.json.get('limit')
 
-    if year is None or month is None or day is None:
-        abort(400)
-
-    query = "SELECT * FROM protocol_by_sport_hit_on_company_day WHERE company='{}' and protocol={} and year={} and month={} and day={} LIMIT {}".format(company, protocol, year, month, day, limit)
-    if hour is not None:
-        query = "SELECT * FROM protocol_by_sport_hit_on_company_hour WHERE company='{}' and protocol={} and year={} and month={} and day={} and hour={} LIMIT {}".format(
-            company, protocol, year, month, day, hour, limit
+    if year is not None:
+        query = "SELECT * FROM protocol_by_sport_hit_in_company_year WHERE company='{}' and protocol='{}' and year={} LIMIT {}".format(
+            company, protocol, year, limit
         )
-        if minute is not None:
-            query = "SELECT * FROM protocol_by_sport_hit_on_company_minute WHERE company='{}' and protocol={} and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
-                company, protocol, year, month, day, hour, minute, limit
+        if month is not None:
+            query = "SELECT * FROM protocol_by_sport_hit_in_company_month WHERE company='{}' and protocol='{}' and year={} and month={}".format(
+                company, protocol, year, month, limit
             )
-            if second is not None:
-                query = "SELECT * FROM protocol_by_sport_hit_on_company_sec WHERE company='{}' and protocol={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
-                    company, protocol, year, month, day, hour, minute, second, limit
+            if day is not None:
+                query = "SELECT * FROM protocol_by_sport_hit_on_company_day WHERE company='{}' and protocol='{}' and year={} and month={} and day={} LIMIT {}".format(
+                    company, protocol, year, month, day, limit
                 )
-    
+                if hour is not None:
+                    query = "SELECT * FROM protocol_by_sport_hit_on_company_hour WHERE company='{}' and protocol='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                        company, protocol, year, month, day, hour, limit
+                    )
+                    if minute is not None:
+                        query = "SELECT * FROM protocol_by_sport_hit_on_company_minute WHERE company='{}' and protocol='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
+                            company, protocol, year, month, day, hour, minute, limit
+                        )
+                        if second is not None:
+                            query = "SELECT * FROM protocol_by_sport_hit_on_company_sec WHERE company='{}' and protocol='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
+                                company, protocol, year, month, day, hour, minute, second, limit
+                            )
+                
     statement = SimpleStatement(query)
     obj = {
         "company" : company,
@@ -706,23 +730,31 @@ def getprotocolbysporthitdev(protocol, device_id):
     second = request.json.get('second')
     limit = request.json.get('limit')
 
-    if year is None or month is None or day is None:
-        abort(400)
-    
-    query = "SELECT * FROM protocol_by_sport_hit_on_device_id_day WHERE device_id='{}' and protocol={} and year={} and month={} and day={} LIMIT {}".format(device_id, protocol, year, month, day, limit)
-    if hour is not None:
-        query = "SELECT * FROM protocol_by_sport_hit_on_device_id_hour WHERE device_id='{}' and protocol={} and year={} and month={} and day={} and hour={} LIMIT {}".format(
-            device_id, protocol, year, month, day, hour, limit
+    if year is not None:
+        query = "SELECT * FROM protocol_by_sport_hit_on_device_id_year WHERE device_id='{}' and protocol='{}' and year={} LIMIT {}".format(
+            device_id, protocol, year, limit
         )
-        if minute is not None:
-            query = "SELECT * FROM protocol_by_sport_hit_on_device_id_minute WHERE device_id='{}' and protocol={} and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
-                device_id, protocol, year, month, day, hour, minute, limit
+        if month is not None:
+            query = "SELECT * FROM protocol_by_sport_hit_on_device_id_month WHERE device_id='{}' and protocol='{}' and year={} and month={} LIMIT {}".format(
+                device_id, protocol, year, month, limit
             )
-            if second is not None:
-                query = "SELECT * FROM protocol_by_sport_hit_on_device_id_sec WHERE device_id='{}' and protocol={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
-                    device_id, protocol, year, month, day, hour, minute, second, limit
+            if day is not None:    
+                query = "SELECT * FROM protocol_by_sport_hit_on_device_id_day WHERE device_id='{}' and protocol='{}' and year={} and month={} and day={} LIMIT {}".format(
+                    device_id, protocol, year, month, day, limit
                 )
-    
+                if hour is not None:
+                    query = "SELECT * FROM protocol_by_sport_hit_on_device_id_hour WHERE device_id='{}' and protocol='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                        device_id, protocol, year, month, day, hour, limit
+                    )
+                    if minute is not None:
+                        query = "SELECT * FROM protocol_by_sport_hit_on_device_id_minute WHERE device_id='{}' and protocol='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
+                            device_id, protocol, year, month, day, hour, minute, limit
+                        )
+                        if second is not None:
+                            query = "SELECT * FROM protocol_by_sport_hit_on_device_id_sec WHERE device_id='{}' and protocol='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
+                                device_id, protocol, year, month, day, hour, minute, second, limit
+                            )
+                
     statement = SimpleStatement(query)
     obj = {
         "device_id" : device_id,
@@ -738,7 +770,7 @@ def getprotocolbysporthitdev(protocol, device_id):
 
 @app.route('/api/statistic/v1.0/protocolbydporthit/<protocol>', methods=['POST'])
 @auth.login_required
-def getprotocolbydporthid(protocol):
+def getprotocolbydporthit(protocol):
     # company = g.user['company']
     company = request.json.get('company')
     year = request.json.get('year')
@@ -749,23 +781,31 @@ def getprotocolbydporthid(protocol):
     second = request.json.get('second')
     limit = request.json.get('limit')
 
-    if year is None or month is None or day is None:
-        abort(400)
-
-    query = "SELECT * FROM protocol_by_dport_hit_on_company_day WHERE company='{}' and protocol={} and year={} and month={} and day={} LIMIT {}".format(company, protocol, year, month, day, limit)
-    if hour is not None:
-        query = "SELECT * FROM protocol_by_dport_hit_on_company_hour WHERE company='{}' and protocol={} and year={} and month={} and day={} and hour={} LIMIT {}".format(
-            company, protocol, year, month, day, hour, limit
+    if year is not None:
+        query = "SELECT * FROM protocol_by_dport_hit_on_company_year WHERE company='{}' and protocol='{}' and year={} LIMIT {}".format(
+            company, protocol, year, limit
         )
-        if minute is not None:
-            query = "SELECT * FROM protocol_by_dport_hit_on_company_minute WHERE company='{}' and protocol={} and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
-                company, protocol, year, month, day, hour, minute, limit
+        if month is not None:
+            query = "SELECT * FROM protocol_by_dport_hit_on_company_month WHERE company='{}' and protocol='{}' and year={} and month={} LIMIT {}".format(
+                company, year, month, day, limit
             )
-            if second is not None:
-                query = "SELECT * FROM protocol_by_dport_hit_on_company_second WHERE company='{}' and protocol={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
-                    company, protocol, year, month, day, hour, minute, second, limit
+            if day is not None:
+                query = "SELECT * FROM protocol_by_dport_hit_on_company_day WHERE company='{}' and protocol='{}' and year={} and month={} and day={} LIMIT {}".format(
+                    company, protocol, year, month, day, limit
                 )
-    
+                if hour is not None:
+                    query = "SELECT * FROM protocol_by_dport_hit_on_company_hour WHERE company='{}' and protocol='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                        company, protocol, year, month, day, hour, limit
+                    )
+                    if minute is not None:
+                        query = "SELECT * FROM protocol_by_dport_hit_on_company_minute WHERE company='{}' and protocol='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
+                            company, protocol, year, month, day, hour, minute, limit
+                        )
+                        if second is not None:
+                            query = "SELECT * FROM protocol_by_dport_hit_on_company_second WHERE company='{}' and protocol='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
+                                company, protocol, year, month, day, hour, minute, second, limit
+                            )
+                
     statement = SimpleStatement(query)
     obj = {
         "company" : company,
@@ -790,23 +830,31 @@ def getprotocolbydporthitdev(protocol, device_id):
     second = request.json.get('second')
     limit = request.json.get('limit')
 
-    if year is None or month is None or day is None:
-        abort(400)
-    
-    query = "SELECT * FROM protocol_by_dport_hit_on_device_id_day WHERE device_id='{}' and protocol={} and year={} and month={} and day={} LIMIT {}".format(device_id, protocol, year, month, day, limit)
-    if hour is not None:
-        query = "SELECT * FROM protocol_by_dport_hit_on_device_id_hour WHERE device_id='{}' and protocol={} and year={} and month={} and day={} and hour={} LIMIT {}".format(
-            device_id, protocol, year, month, day, hour, limit
+    if year is not None:
+        query = "SELECT * FROM protocol_by_dport_hit_on_device_id_year WHERE device_id='{}' and protocol='{}' and year={} LIMIT {}".format(
+            device_id, protocol, year, limit
         )
-        if minute is not None:
-            query = "SELECT * FROM protocol_by_dport_hit_on_device_id_minute WHERE device_id='{}' and protocol={} and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
-                device_id, protocol, year, month, day, hour, minute, limit
+        if month is not None:
+            query = "SELECT * FROM protocol_by_dport_hit_on_device_id_month WHERE device_id='{}' and protocol='{}' and year={} and month={} LIMIT {}".format(
+                device_id, protocol, year, month, limit
             )
-            if second is not None:
-                query = "SELECT * FROM protocol_by_dport_hit_on_device_id_second WHERE device_id='{}' and protocol={} and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
-                    device_id, protocol, year, month, day, hour, minute, second, limit
+            if day is not None:    
+                query = "SELECT * FROM protocol_by_dport_hit_on_device_id_day WHERE device_id='{}' and protocol='{}' and year={} and month={} and day={} LIMIT {}".format(
+                    device_id, protocol, year, month, day, limit
                 )
-    
+                if hour is not None:
+                    query = "SELECT * FROM protocol_by_dport_hit_on_device_id_hour WHERE device_id='{}' and protocol='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                        device_id, protocol, year, month, day, hour, limit
+                    )
+                    if minute is not None:
+                        query = "SELECT * FROM protocol_by_dport_hit_on_device_id_minute WHERE device_id='{}' and protocol='{}' and year={} and month={} and day={} and hour={} and minute={} LIMIT {}".format(
+                            device_id, protocol, year, month, day, hour, minute, limit
+                        )
+                        if second is not None:
+                            query = "SELECT * FROM protocol_by_dport_hit_on_device_id_second WHERE device_id='{}' and protocol='{}' and year={} and month={} and day={} and hour={} and minute={} and second={} LIMIT {}".format(
+                                device_id, protocol, year, month, day, hour, minute, second, limit
+                            )
+                
     statement = SimpleStatement(query)
     obj = {
         "device_id" : device_id,
