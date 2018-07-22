@@ -25,7 +25,7 @@ read netint
 curl -u ${username}:${password} -X POST \
 http://103.24.56.244:5000/api/sensors/v1.0/verifysensorkey \
 -H 'content-type: application/json' \
--d '{"device_id" : "${device_id}", "sensor_key" : "${sensor_key}", "netint" : "${netint}"}' \
+-d '{"device_id" : "'"${device_id}"'", "sensor_key" : "'"${sensor_key}"'", "netint" : "'"${netint}"'"}' \
 -o package.tar.gz
 
 mkdir -p /etc/snoqtt
