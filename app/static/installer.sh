@@ -23,7 +23,7 @@ echo "Network Interface For Listen : "
 read netint
 
 curl -u ${username}:${password} -X POST \
-http://localhost:5000/api/sensors/v1.0/verifysensorkey \
+http://103.24.56.244:5000/api/sensors/v1.0/verifysensorkey \
 -H 'content-type: application/json' \
 -d '{"device_id" : "${device_id}", "sensor_key" : "${sensor_key}", "netint" : "${netint}"}' \
 -o package.tar.gz
@@ -48,6 +48,5 @@ else
     service docker start
     echo "Docker installed"
 
-/etc/snoqtt/build_snoqtt.sh
-
 echo "Installation Done"
+echo "Please run build_snoqtt.sh script in /etc/snoqtt directory"
