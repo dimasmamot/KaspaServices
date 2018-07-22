@@ -30,6 +30,9 @@ def verifysensorkey():
     device_id = request.json.get('device_id')
     sensor_key = request.json.get('sensor_key')
     netint = request.json.get('netint')
+    print(device_id)
+    print(sensor_key)
+    print(netint)
     if device_id is None or sensor_key is None or netint is None:
         abort(400)
     q = Sensor.objects.filter(company = g.user['company'])
