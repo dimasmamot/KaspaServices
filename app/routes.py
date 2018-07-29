@@ -489,7 +489,7 @@ def getsignaturehit():
 
     if year is not None:
         query = "SELECT * FROM signature_hit_on_company_year WHERE company='{}' and year={}".format(
-            company, limit
+            company, year, limit
         )
         if month is not None:
             query = "SELECT * FROM signature_hit_on_company_month WHERE company='{}' and year={} and month={} LIMIT {}".format(
