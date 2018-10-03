@@ -488,7 +488,7 @@ def getsignaturehit():
     limit = request.json.get('limit')
 
     if year is not None:
-        query = "SELECT * FROM signature_hit_on_company_year WHERE company='{}' and year={}".format(
+        query = "SELECT * FROM signature_hit_on_company_year WHERE company='{}' and year={} LIMIT {}".format(
             company, year, limit
         )
         if month is not None:
@@ -685,11 +685,11 @@ def getprotocolbysporthit(protocol):
     limit = request.json.get('limit')
 
     if year is not None:
-        query = "SELECT * FROM protocol_by_sport_hit_in_company_year WHERE company='{}' and protocol='{}' and year={} LIMIT {}".format(
+        query = "SELECT * FROM protocol_by_sport_hit_on_company_year WHERE company='{}' and protocol='{}' and year={} LIMIT {}".format(
             company, protocol, year, limit
         )
         if month is not None:
-            query = "SELECT * FROM protocol_by_sport_hit_in_company_month WHERE company='{}' and protocol='{}' and year={} and month={}".format(
+            query = "SELECT * FROM protocol_by_sport_hit_on_company_month WHERE company='{}' and protocol='{}' and year={} and month={} LIMIT {}".format(
                 company, protocol, year, month, limit
             )
             if day is not None:
@@ -1090,7 +1090,7 @@ def getcountrysourcehit():
             )
             if day is not None:
                 query = "SELECT * FROM country_source_hit_on_company_day WHERE company='{}' and year={} and month={} and day={} LIMIT {}".format(
-                    company, year, month, day, limi
+                    company, year, month, day, limit
                 )
                 if hour is not None:
                     query = "SELECT * FROM country_source_hit_on_company_hour WHERE company='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
