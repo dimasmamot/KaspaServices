@@ -61,7 +61,7 @@ def verifysensorkey():
         templatebuild = build_template.read()
     with open(filediroutput + buildfile, "w") as current:
         current.write(templatebuild.format(protected_subnet=sensor['protected_subnet'],
-                                            external_subnet="'{}'".format(sensor['external_subnet']),
+                                            external_subnet="{}".format(sensor['external_subnet']),
                                             oinkcode=sensor['oinkcode']))
     
     with open(filedirtemplate + conffile) as conf_template:
