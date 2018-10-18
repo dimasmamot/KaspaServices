@@ -8,7 +8,7 @@ class Config(object):
     CASSANDRA_USERNAME = os.environ.get('CASSANDRA_USERNAME')
     CASSANDRA_PASSWORD = os.environ.get('CASSANDRA_PASSWORD')
     CASSANDRA_CLUSTER_HOST = os.environ.get('CASSANDRA_CLUSTER_HOST')
-    DEFAULT_EXTERNAL_SUBNET = "kampret"
+    DEFAULT_EXTERNAL_SUBNET = "!$HOME_NET"
     DEFAULT_GLOBAL_TOPIC = "snoqttv5"
     DEFAULT_OINKCODE = os.environ.get('DEFAULT_OINKCODE')
     BASEDIR = basedir
