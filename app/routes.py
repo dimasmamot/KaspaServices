@@ -453,7 +453,7 @@ def geteventhitdev(device_id):
                     device_id, year, month, day, limit
                 )
                 if hour is not None:
-                    query = "SELECT * FROM event_hit_on_device_id_minute WHERE device_id='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
+                    query = "SELECT * FROM event_hit_on_device_id_min WHERE device_id='{}' and year={} and month={} and day={} and hour={} LIMIT {}".format(
                         device_id, year, month, day, hour, limit
                     )
                     if minute is not None:

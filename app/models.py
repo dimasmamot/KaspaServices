@@ -30,7 +30,8 @@ class User(Model):
         self.group = "admin"
 
     def generate_auth_token(self):
-        s = Serializer(app.config['SECRET_KEY'])
+        EXPIRES_IN_A_YEAR = 365 * 24 * 60 * 60
+        s = Serializer(app.config['SECRET_KEY'], expires_in=EXPIRES_IN_A_YEAR)
         return s.dumps({'username': self.username})
 
     @staticmethod
