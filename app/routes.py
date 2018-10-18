@@ -3,6 +3,7 @@ from app.models import User, Sensor
 from flask import request, abort, jsonify, g, send_from_directory
 from cassandra.query  import SimpleStatement
 from flask_httpauth import HTTPBasicAuth
+from datetime import datetime
 import os, tarfile
 
 @app.route('/')
@@ -217,6 +218,14 @@ def createsensor():
         topic_resp=sensor['topic_resp'],
         sensor_key=sensor['sensor_key'],
         time_created=sensor['time_created']
+    )
+
+    session.execute(
+        """
+        INSERT INTO sensor_status (device_id, status, ts) 
+        VALUES (%s, %s, %s)
+        """,
+        (device_id, "STOPPED", datetime.now())
     )
 
     return jsonify({
@@ -1262,6 +1271,42 @@ def getcountrydesthitdev(device_id):
         obj['count'] = obj['count'] + 1
     
     return jsonify(obj)
+
+@app.route('/api/sensor/v1.0/checkstatus/<device_id>', methods=['POST'])
+@auth.login_required
+def getSensorStatus(device_id):
+    query = "SELECT * FROM sensor_status WHERE device_id='{}'".format(device_id)
+    statement = SimpleStatement(query)
+    obj = {
+        "device_id" : device_id,
+        "ts" : "",
+        "status" : "",
+    }
+    for status in session.execute(statement):
+        obj['ts'] = status['ts']
+        obj['status'] = status['ts']
+
+    return jsonify(obj)
+
+@app.route('/api/sensor/v1.0/startsensor/<device_id>', methods=['POST'])
+def startSensor(device_id):
+    session.execute(
+        """
+        INSERT INTO sensor_status (device_id, status, ts) 
+        VALUES (%s, %s, %s)
+        """,
+        (device_id, "RUNNING", datetime.now())
+    )
+
+@app.route('/api/sensor/v1.0/stopsensor/<device_id>', methods=['POST'])
+def stopSensor(device_id):
+    session.execute(
+        """
+        INSERT INTO sensor_status (device_id, status, ts) 
+        VALUES (%s, %s, %s)
+        """,
+        (device_id, "STOPPED", datetime.now())
+    )
 
 @auth.verify_password
 def verify_password(username_or_token, password):
