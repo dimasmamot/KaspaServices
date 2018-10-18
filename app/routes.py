@@ -1284,7 +1284,7 @@ def getSensorStatus(device_id):
     }
     for status in session.execute(statement):
         obj['ts'] = status['ts']
-        obj['status'] = status['ts']
+        obj['status'] = status['status']
 
     return jsonify(obj)
 
