@@ -225,7 +225,7 @@ def createsensor():
         INSERT INTO sensor_status (device_id, status, ts) 
         VALUES (%s, %s, %s)
         """,
-        (device_id, "STOPPED", datetime.now())
+        (sensor['device_id'], "STOPPED", datetime.now())
     )
 
     return jsonify({
